@@ -31,4 +31,50 @@ class OrderController extends Controller
             'order' => $order,
         ], 201);
     }
+
+
+    public function userOrders(User $user, Request $request)
+    {
+        $orders = $user->orders()
+            ->when($request->status, fn($q) => $q->where('status', $request->status))
+            ->when($request->filled('date_from'), fn($q) => $q->whereDate('created_at', '>=', $request->date_from))
+            ->when($request->filled('date_to'), fn($q) => $q->whereDate('created_at', '<=', $request->date_to))
+            ->when($request->filled('min_price'), fn($q) => $q->where('price', '>=', $request->min_price))
+            ->when($request->filled('max_price'), fn($q) => $q->where('price', '<=', $request->max_price))
+            ->latest()
+            ->paginate(10);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'User orders retrieved successfully',
+            'orders' => $orders,
+        ]);
+    }
+
+    public function orderDetails(User $user, Order $order)
+    {
+        return response()->json([
+            'status' => true,
+            'message' => 'User orders retrieved successfully',
+            'orders' => $order,
+        ]);
+    }
+    public function updateStatus(Request $request, Order $order)
+    {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'status' => 'required|in:accepted,rejected',
+        ]);
+
+        // Update the order status
+        $order->update([
+            'status' => $validated['status'],
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Order status updated successfully.',
+            'order' => $order
+        ]);
+    }
 }

@@ -3,22 +3,40 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
-use App\Models\Contact;
-use App\Models\Offer;
-use App\Models\Test;
+
 use App\Models\User;
-use App\Models\Visit;
-use Illuminate\Http\Request;
+use App\Models\Order;
 
 class DashboardController extends Controller
 {
-    public function index(){
-        $offers = User::get()->count();
 
-        $lastOffers = User::orderBy('id','DESC')->take(5)->get();
+    public function index()
+    {
+        // General counts
+        $usersCount = User::count();
+        $ordersCount = Order::count();
 
-        return view('dashboard.index',compact('offers',
-        'lastOffers'));
+        // Status counts
+        $pendingCount = Order::where('status', 'pending')->count();
+        $underReviewCount = Order::where('status', 'under_review')->count();
+        $acceptedCount = Order::where('status', 'accepted')->count();
+        $rejectedCount = Order::where('status', 'rejected')->count();
+
+        // Total received money (sum of accepted prices)
+        $totalReceived = Order::where('status', 'accepted')->sum('price');
+
+        // Latest 5 orders
+        $latestOrders = Order::with('user')->latest()->take(5)->get();
+
+        return view('dashboard.index', compact(
+            'usersCount',
+            'ordersCount',
+            'pendingCount',
+            'underReviewCount',
+            'acceptedCount',
+            'rejectedCount',
+            'totalReceived',
+            'latestOrders'
+        ));
     }
 }

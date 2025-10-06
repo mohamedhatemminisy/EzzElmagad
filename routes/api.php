@@ -25,3 +25,6 @@ use Illuminate\Support\Facades\Route;
     Route::get('user/{user}', [UserController::class, 'show']);
     Route::get('setting', [SettingController::class, 'index']);
     Route::post('/create_orders', [OrderController::class, 'store']);
+    Route::get('/user/{user}/orders', [OrderController::class, 'userOrders']);
+    Route::get('/user/{user}/order/{order}', [OrderController::class, 'orderDetails']);
+    Route::post('/orders/{order}/update-status', [OrderController::class, 'updateStatus']);

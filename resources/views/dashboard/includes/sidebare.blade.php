@@ -9,6 +9,13 @@
                         </li>
                         @endcan
 
+                        <li>
+                                <a class="menu-item" href="{{ route('admin.dashboard') }}">
+                                        <i class="la la-dashboard"></i>
+                                        <span class="menu-title">لوحة التحكم</span>
+                                </a>
+                        </li>
+
                         <li class=" nav-item"><a href="#"><i class="la la-arrows-h"></i><span class="menu-title"
                                                 data-i18n="nav.horz_nav.main">المدراء</span></a>
                                 <ul class="menu-content">
