@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ContractTermsController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\SettingController;
+use App\Http\Controllers\Api\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,6 @@ use Illuminate\Support\Facades\Route;
     Route::get('contract_terms', [ContractTermsController::class, 'contractTerms']);
     Route::post('create_user', [UserController::class, 'createUser']);
     Route::post('update_device_token', [UserController::class, 'updateDeviceToken']);
+    Route::get('user/{user}', [UserController::class, 'show']);
     Route::get('setting', [SettingController::class, 'index']);
+    Route::post('/create_orders', [OrderController::class, 'store']);

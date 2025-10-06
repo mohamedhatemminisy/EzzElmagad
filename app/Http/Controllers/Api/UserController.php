@@ -23,6 +23,20 @@ class UserController extends Controller
             'data'    => $user
         ], 201);
     }
+    public function show($id)
+    {
+        $user = User::where('app_id',$id)->first();
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'user not exist',
+            ],422);
+        }
+        return response()->json([
+            'success' => true,
+            'data'    => $user
+        ], 201);
+    }
 
     public function updateDeviceToken(UpdateDeviceTokenRequest $request)
     {

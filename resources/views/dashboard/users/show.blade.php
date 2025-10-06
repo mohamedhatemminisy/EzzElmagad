@@ -49,7 +49,7 @@
 
                                     <div class="col-md-6 mb-3">
                                         <label class="font-weight-bold">العنوان</label>
-                                        <p class="border p-2">{{ $user->address }}</p>
+                                        <p class="border p-2">{{ $user->adress }}</p>
                                     </div>
 
                                     <div class="col-md-6 mb-3">

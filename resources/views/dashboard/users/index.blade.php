@@ -41,27 +41,33 @@
                                 <form action="{{ route('users') }}" method="GET">
                                     <div class="row">
                                         <div class="col-md-2 mb-2">
-                                            <input type="text" name="name" class="form-control" placeholder="الاسم" value="{{ request('name') }}">
+                                            <input type="text" name="name" class="form-control" placeholder="الاسم"
+                                                value="{{ request('name') }}">
                                         </div>
 
                                         <div class="col-md-2 mb-2">
-                                            <input type="text" name="email" class="form-control" placeholder="البريد الإلكتروني" value="{{ request('email') }}">
+                                            <input type="text" name="email" class="form-control"
+                                                placeholder="البريد الإلكتروني" value="{{ request('email') }}">
                                         </div>
 
                                         <div class="col-md-2 mb-2">
-                                            <input type="text" name="address" class="form-control" placeholder="العنوان" value="{{ request('address') }}">
+                                            <input type="text" name="address" class="form-control" placeholder="العنوان"
+                                                value="{{ request('address') }}">
                                         </div>
 
                                         <div class="col-md-2 mb-2">
-                                            <input type="text" name="company_category" class="form-control" placeholder="فئة الشركة" value="{{ request('company_category') }}">
+                                            <input type="text" name="company_category" class="form-control"
+                                                placeholder="فئة الشركة" value="{{ request('company_category') }}">
                                         </div>
 
                                         <div class="col-md-2 mb-2">
-                                            <input type="text" name="commercial_number" class="form-control" placeholder="الرقم التجاري" value="{{ request('commercial_number') }}">
+                                            <input type="text" name="commercial_number" class="form-control"
+                                                placeholder="الرقم التجاري" value="{{ request('commercial_number') }}">
                                         </div>
 
                                         <div class="col-md-2 mb-2">
-                                            <input type="text" name="representer" class="form-control" placeholder="الممثل" value="{{ request('representer') }}">
+                                            <input type="text" name="representer" class="form-control"
+                                                placeholder="الممثل" value="{{ request('representer') }}">
                                         </div>
                                     </div>
 
@@ -70,7 +76,8 @@
                                             <button type="submit" class="btn btn-primary btn-block">تصفية</button>
                                         </div>
                                         <div class="col-md-2">
-                                            <a href="{{ route('users') }}" class="btn btn-secondary btn-block">إعادة تعيين</a>
+                                            <a href="{{ route('users') }}" class="btn btn-secondary btn-block">إعادة
+                                                تعيين</a>
                                         </div>
                                     </div>
                                 </form>
@@ -103,12 +110,28 @@
                                                 <td>{{ $user->representer }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-outline-info" title="عرض التفاصيل">
+                                                        <a href="{{ route('users.show', $user->id) }}"
+                                                            class="btn btn-sm btn-outline-info" title="عرض التفاصيل">
                                                             <i class="fa fa-eye"></i>
                                                         </a>
-                                                        <a href="{{ route('users.orders', $user->id) }}" class="btn btn-sm btn-outline-primary" title="عرض الطلبات">
+                                                        @php
+                                                        $pendingCount = $user->orders()->where('status',
+                                                        'pending')->count();
+                                                        @endphp
+
+                                                        <a href="{{ route('users.orders', $user->id) }}"
+                                                            class="btn btn-sm btn-outline-primary position-relative"
+                                                            title="عرض الطلبات">
                                                             <i class="fa fa-list"></i>
+
+                                                            @if($pendingCount > 0)
+                                                            <span class="badge badge-danger position-absolute"
+                                                                style="top: -5px; right: -5px;">
+                                                                {{ $pendingCount }}
+                                                            </span>
+                                                            @endif
                                                         </a>
+
                                                     </div>
                                                 </td>
                                             </tr>

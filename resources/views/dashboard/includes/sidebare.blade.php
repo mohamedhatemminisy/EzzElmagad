@@ -46,6 +46,12 @@
                                 </a>
                         </li>
 
+                        <li>
+                                <a class="menu-item" href="{{ route('orders.index') }}">
+                                        <i class="la la-list-alt"></i>
+                                        <span class="menu-title">الطلبات</span>
+                                </a>
+                        </li>
 
 
                         <li>
